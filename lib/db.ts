@@ -8,7 +8,7 @@ export async function connectToDb() {
     return { client: cachedClient, db: cachedDb };
   }
 
-  const uri = process.env.MONGO_URI;
+  const uri = process.env.MONGODB_URI;
   
   if (!uri) {
     throw new Error("MONGODB_URI environment variable is not set");
