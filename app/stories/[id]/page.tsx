@@ -1,32 +1,36 @@
-import { stories } from "@/app/stories";
+import NotFoundPage from "@/app/not-found";
 import Image from "next/image";
-import NotFound from "@/app/not-found";
 
-export default async function StoryDetails({
+export default async function StoryDetailsPage({
   params,
 }: {
   params: { id: string };
 }) {
   const { id } = await params;
-  const story = stories.find((story) => story.id === id);
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_BASE_URL + "/stories/" + id
+  );
+  const story = await response.json();
 
   if (!story) {
-    return <NotFound />;
+    return <NotFoundPage />;
   }
 
   return (
-    <section>
-      <h1>{story.name}</h1>
-      <figure>
-        <Image
-          src={"/" + story.imageUrl}
-          alt={story.name}
-          width={150}
-          height={150}
-        />
-        <figcaption>{story.name}</figcaption>
-      </figure>
-      <p>{story.description}</p>
+    <section className="px-8 py-6 flex flex-col gap-12">
+      <h1 className="font-bold text-6xl text-white">{story.name}</h1>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <figure className="relative w-full aspect-[16/9]">
+          <Image
+            src={"/" + story.imageUrl}
+            alt={story.name}
+            fill
+            className="object-contain"
+          />
+        </figure>
+        <p className="text-xl md:self-center">{story.description}</p>
+      </div>
     </section>
   );
 }

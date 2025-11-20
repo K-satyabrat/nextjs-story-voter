@@ -1,5 +1,5 @@
 import { stories } from "@/app/stories";
-import { NextApiRequest } from "next";
+import { connectToDb } from "@/lib/db";
 import { NextRequest } from "next/server";
 
 interface Params {
@@ -12,8 +12,11 @@ export async function GET(
 ) {
   const urlParams = await params;
   const storyId = urlParams.id;
+  const { db } = await connectToDb();
 
-  const story = stories.find((story) => story.id === storyId);
+  const story = await db.collection("my-stories").findOne({ id: storyId });
+
+  // const story = stories.find((story) => story.id === storyId);
   if (!story) {
     return new Response("Story not found", { status: 404 });
   }

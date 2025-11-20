@@ -1,32 +1,11 @@
-"use client"
+import VotedStoriesList from "./VotedStoriesList";
 
-import { stories } from "@/app/stories";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
+// const BASE_URL = "http://localhost:3000/api";
+export default async function VotedStoriesPage() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/111/votedStories`);
+  const votedStories = await response.json();
 
-export default function VotedStoriesPage() {
-  const [voteId, setVoteId] = useState(["1", "2"]);
+  
 
-  const votedStories = voteId.map(
-    (voteId) => stories.find((story) => story.id === voteId)!
-  );
-  return (
-    <section>
-      <h1>Voted Stories</h1>
-      {votedStories.map((votedStory) => (
-        <Link href={`/story/${votedStory.id}`} key={votedStory.id}>
-          <figure>
-            <Image
-              src={"/" + votedStory.imageUrl}
-              alt={votedStory.name}
-              width={150}
-              height={150}
-            />
-          </figure>
-          <h3>{votedStory.name}</h3>
-        </Link>
-      ))}
-    </section>
-  );
+  return <VotedStoriesList initialUserVotedStories={votedStories} />;
 }
