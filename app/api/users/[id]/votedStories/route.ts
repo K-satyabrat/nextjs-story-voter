@@ -7,9 +7,10 @@ import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const userId = context.params.id;
+  const { id } = await context.params;
+  const userId = id;
 
   const { db } = await connectToDb();
   const userVotes = await db
@@ -44,10 +45,11 @@ interface VoteBody {
 
 export async function POST(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   const { db } = await connectToDb();
-  const userId = context.params.id;
+  const { id } = await context.params;
+  const userId = id;
 
   const body: VoteBody = await request.json();
   const storyId = body.storyId;
@@ -81,10 +83,11 @@ interface VotedStoryCollection {
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   const { db } = await connectToDb();
-  const userId = context.params.id;
+  const { id } = await context.params;
+  const userId = id;
 
   const body: VoteBody = await request.json();
   const storyId = body.storyId;

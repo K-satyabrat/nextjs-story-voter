@@ -30,7 +30,7 @@ export default function VotedStoriesList({
     const updatedVotedStories = await response.json();
     setVotedStories(updatedVotedStories);
   }
-  console.log("votedStories", votedStories);
+  
   return (
     <section className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
       {Array.isArray(votedStories) &&

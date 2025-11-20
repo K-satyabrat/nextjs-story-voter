@@ -4,9 +4,9 @@ import Image from "next/image";
 export default async function StoryDetailsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   const response = await fetch(
     process.env.NEXT_PUBLIC_BASE_URL + "/stories/" + id
   );
