@@ -8,7 +8,11 @@ export async function connectToDb() {
     return { client: cachedClient, db: cachedDb };
   }
 
-  const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.u5byg4l.mongodb.net/?appName=Cluster0`;
+  const uri = process.env.MONGO_URI;
+  
+  if (!uri) {
+    throw new Error("MONGODB_URI environment variable is not set");
+  }
 
   const client = new MongoClient(uri, {
     serverApi: {

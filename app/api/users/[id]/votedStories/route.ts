@@ -23,7 +23,7 @@ export async function GET(
   // console.log("after one");
 
   const votedStoryIds = userVotes.voteStoryIds;
-  console.log("votedStoryIds", votedStoryIds);
+  
 
   const userVotedStories = await db
     .collection("my-stories")
