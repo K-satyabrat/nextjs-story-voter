@@ -7,10 +7,9 @@ import { NextRequest } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
-  const urlParams = await params;
-  const userId = urlParams.id;
+  const userId = context.params.id;
 
   const { db } = await connectToDb();
   const userVotes = await db
@@ -20,7 +19,7 @@ export async function GET(
   if (!userVotes) {
     return new Response(JSON.stringify([]), { status: 200 });
   }
-  console.log("after one");
+  // console.log("after one");
 
   const votedStoryIds = userVotes.voteStoryIds;
   console.log("votedStoryIds", votedStoryIds);
@@ -45,12 +44,10 @@ interface VoteBody {
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   const { db } = await connectToDb();
-
-  const urlParams = await params;
-  const userId = urlParams.id;
+  const userId = context.params.id;
 
   const body: VoteBody = await request.json();
   const storyId = body.storyId;
@@ -84,12 +81,10 @@ interface VotedStoryCollection {
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   const { db } = await connectToDb();
-
-  const urlParams = await params;
-  const userId = urlParams.id;
+  const userId = context.params.id;
 
   const body: VoteBody = await request.json();
   const storyId = body.storyId;

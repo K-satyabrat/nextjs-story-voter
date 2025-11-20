@@ -6,7 +6,7 @@ export default async function StoryDetailsPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = await params;
+  const { id } = params;
   const response = await fetch(
     process.env.NEXT_PUBLIC_BASE_URL + "/stories/" + id
   );

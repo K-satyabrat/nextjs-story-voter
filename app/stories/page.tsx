@@ -1,5 +1,7 @@
 import StoriesList from "./StoriesList";
 
+export const dynamic = "force-dynamic";
+
 export default async function StoriesPage() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/stories`);
   if (!response.ok) throw new Error(`Request failed: ${response.status}`);
