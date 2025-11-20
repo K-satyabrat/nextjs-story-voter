@@ -7,9 +7,10 @@ export default async function StoryDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const response = await fetch(
-    process.env.NEXT_PUBLIC_BASE_URL + "/stories/" + id
-  );
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
+  const response = await fetch(baseUrl + '/api/stories/' + id);
   const story = await response.json();
 
   if (!story) {

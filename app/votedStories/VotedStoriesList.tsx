@@ -17,7 +17,7 @@ export default function VotedStoriesList({
 
   async function unVoteStory(storyId: string) {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/users/111/votedStories`,
+      '/api/users/111/votedStories',
       {
         method: "DELETE",
         body: JSON.stringify({ storyId }),

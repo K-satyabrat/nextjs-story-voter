@@ -3,12 +3,15 @@ import StoriesList from "./StoriesList";
 export const dynamic = "force-dynamic";
 
 export default async function StoriesPage() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/stories`);
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
+  const response = await fetch(baseUrl + '/api/stories');
   if (!response.ok) throw new Error(`Request failed: ${response.status}`);
   const stories = await response.json();
 
   const votedResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/users/111/votedStories`,
+    baseUrl + '/api/users/111/votedStories',
     {
       cache: "no-cache",
     }

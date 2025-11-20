@@ -4,7 +4,10 @@ import VotedStoriesList from "./VotedStoriesList";
 export const dynamic = "force-dynamic";
 
 export default async function VotedStoriesPage() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/111/votedStories`);
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
+  const response = await fetch(baseUrl + '/api/users/111/votedStories');
   const votedStories = await response.json();
 
   
